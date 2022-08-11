@@ -21,8 +21,8 @@ function generateGame(){
         cell.setAttribute('id', i)
         cell.classList.add(gridArr[i])
         grid.appendChild(cell)
-        cell.addEventListener('click', playGame, {once: true})
         cells.push(cell)
+        cell.addEventListener('click', playGame, {once: true})
     }
 
     // add values to each cell
@@ -60,20 +60,30 @@ function generateGame(){
         }
     }
 }
-console.log(cells[1])
+//console.log(cells[1])
 
 //either step on mine or earn points
-
+//playGame(document.getElementById('1').click())
 function playGame(e){
+    let position = e.target.id
     //console.log(e.target.id, document.getElementById(`${parseInt(position)}`))
-    if(e.target.classList.contains('clicked')){
-        return;
-    }
     if(e.target.classList.contains('mine')){
         //e.target.style.backgroundColor = 'red'
         alert('game over')
+        // for(i=99; i>0; i--){
+        //     if(document.getElementById(i).classList.contains('mine')){
+        //         console.log(`mine at: ${i}`)
+        //         //document.getElementById(i).classList.remove('mine')
+        //         playGame(document.getElementById(`${i}`).click())
+        //     }
+        //     else{
+        //         continue;
+        //     }
+        // }
     } 
-    let position = e.target.id
+    if(e.target.classList.contains('clicked')){
+        return;
+    }
     //console.log(e.target.getAttribute('data'))
     //get attribute data pulls out the value assigned to cell according to adjacent mines
     if(e.target.hasAttribute('data')){
@@ -82,13 +92,40 @@ function playGame(e){
             e.target.classList.add('clicked')
             return;
         } 
-        // else {
-        //     if(parseInt(position) > 0 && parseInt(position)%10 !== 0){
-        //         let newPosition = parseInt(position) - 11
-        //         console.log(parseInt(newPosition))
-        //         playGame(document.querySelector(`[id='${newPosition}']`))
-        //     }
-        // }
+        if(e.target.innerHTML == '0') {
+                if(parseInt(position) > 0 && parseInt(position)%10 !== 0){
+                    let newPosition = parseInt(position) - 11
+                    playGame(document.getElementById(newPosition).click())
+                }
+                else if(parseInt(position) > 9){
+                    let newPosition = parseInt(position) - 10
+                    playGame(document.getElementById(newPosition).click())
+                }
+                else if(parseInt(position) > 9 && parseInt(position)%10 !== 9){
+                    let newPosition = parseInt(position) - 9
+                    playGame(document.getElementById(newPosition).click())
+                }
+                else if(parseInt(position) > 0 && parseInt(position)%10 !== 0){
+                    let newPosition = parseInt(position) - 1
+                    playGame(document.getElementById(newPosition).click())
+                }
+                else if(parseInt(position) > 9 && parseInt(position)%10 !== 9){
+                    let newPosition = parseInt(position) +1
+                    playGame(document.getElementById(newPosition).click())
+                }
+                else if(parseInt(position) < 90 && parseInt(position)%10 !== 0){
+                    let newPosition = parseInt(position) + 9
+                    playGame(document.getElementById(newPosition).click())
+                }    
+                else if(parseInt(position) < 90){
+                    let newPosition = parseInt(position) + 10
+                    playGame(document.getElementById(newPosition).click())
+                }    
+                else if(parseInt(position) < 90 && parseInt(position)%10 !== 9){
+                    let newPosition = parseInt(position) + 11
+                    playGame(document.getElementById(newPosition).click())
+                } 
+        }
 
         // if(e.target.innerHTML == '0'){
         //     console.log(position)
@@ -103,25 +140,50 @@ function playGame(e){
             // }
         // }
 
-        if(e.target.innerHTML == '0'){
-            clickedZero(e, position)
-        }
+        // if(e.target.innerHTML == '0'){
+        //clickedZero(e, position)
+        // }
     }
     // clickedZero(e, position)
     e.target.classList.add('clicked')
 }
+
+//reveal mines
+
+// function revealMines(e){
+//     for(i=99; i>0; i--){
+//         if(document.getElementById(i).classList.contains('mine')){
+//             console.log(`mine at: ${i}`)
+//             document.getElementById(i).classList.remove('mine')
+//             revealMines(document.getElementById(`${i}`).click())
+//         }
+//         else{
+//             break;
+//         }
+//     }
+// }
+
+
+
 
 // console.log(cells[9].id)
 
 // surrounding squares where value is zero or another value
 
 // function clickedZero(e, position){
-//     if(parseInt(position) > 0 && parseInt(position)%10 !== 0){
-//         let newPosition = parseInt(position) - 11
-//         let newCell = document.getElementById(newPosition)
-//         playGame(newCell)
-//     }
-}
+//     // setTimeout(() => {
+//     //     if(parseInt(position) > 0 && parseInt(position)%10 !== 0){
+//     //         let newPosition = parseInt(position) - 11
+//     //         let newCell = document.getElementById(newPosition)
+//     //         playGame(document.getElementById('1'))
+//     //     }
+//     //     if(parseInt(position) > 9){
+//     //         let newPosition = parseInt(position) - 10
+//     //         let newCell = document.getElementById('1')
+//     //         playGame(newCell)
+//     //     }
+//     // }, 300);
+// }
 
 // reset button
 reset.addEventListener('click', resetButton)
@@ -134,7 +196,7 @@ function resetButton (e) {
 function winGame(e){
     for(i=0; i<cells.length; i++){
         let count = 0
-        if(e.getAttribute('clicked')){
+        if(document.getAttribute('clicked') == true){
             count++
         }
     }
