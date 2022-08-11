@@ -1,8 +1,18 @@
 body{
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Helvetica, sans-serif;
+    text-align: center;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    background-color:indianred;
+    background: url("https://imgur.com/VSM4UoC.jpg");
+    background-size: cover;
+    color:white;
+    text-shadow: 1000px;
 }
 
 .grid {
+    margin-left: auto;
+    margin-right: auto;
     height: 330px;
     width: 330px;
     display: flex;
@@ -19,4 +29,12 @@ body{
 
 .grid .mine {
 background-color: red;
+}
+/* 
+.grid .clicked {
+    background-color: rgb(8, 54, 101);
+} */
+
+#reset-button {
+    display:flex;
 }
