@@ -61,7 +61,7 @@ function generateGame(){
         }
     }
 }
-//console.log(cells[1])
+
 let clickedCount = 0
 let gameOver = false
 //either step on mine or retrieve value
@@ -82,14 +82,13 @@ function playGame(cell){
           })
           breakGame(cell)
           gameOver = true
-    } else if (cell.classList.contains('value')){
+        } else if (cell.classList.contains('value')){
         
         // win logic
         clickedCount++
         if(clickedCount === 85){
             console.log('you win')
             document.querySelector('.gameDecision').innerHTML = 'You Won!!!'
-
         }
 
         cell.innerHTML = cell.getAttribute('data')
@@ -100,14 +99,10 @@ function playGame(cell){
         clickedZero(cell, position)
     }
     cell.classList.add('clicked')
+    //playerWins()
 }
 
-//reveal mines
-
-// console.log(cells[9].id)
-
 // surrounding squares where value is zero or another value
-
 function clickedZero(cell, position){
     //timeout to allow first function to process before returning values
     setTimeout(() => {
@@ -153,13 +148,25 @@ function breakGame(cell){
     document.querySelector('.gameDecision').innerHTML = 'Loser! Try another game LOL!'
 }
 
-function playerWins(cell){
-    let clickedArr = []
-    
-}
+// more win logic
+// function playerWins(){
+//     let count = 0
+//     for(i=0; i<cells.length; i++){
+//         if(cells[i].hasAttribute('clicked')){
+//             count++
+//         }
+//         if(cells[i].hasAttribute('mine')){
+//             count++
+//         }
+//     }
+//     if(count === 100){
+//         console.log('youwin!!!!!')
+//     }
+// }
 
 // reset button
 reset.addEventListener('click', resetButton)
 function resetButton (e) {
     location.reload()
 }
+//console.log(cells[9].hasAttribute('data'))
