@@ -150,7 +150,7 @@ function clickedZero(cell, position){
 //game over
 function breakGame(cell){
     alert('You Lost!!!')
-    document.querySelector('.gameDecision').innerHTML = 'Loser! Try your hand at another game LOL!'
+    document.querySelector('.gameDecision').innerHTML = 'Loser! Try another game LOL!'
 }
 
 function playerWins(cell){

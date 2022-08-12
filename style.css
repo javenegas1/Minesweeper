@@ -1,12 +1,14 @@
 body{
-    font-family: Helvetica, sans-serif;
+    /* font-family: Helvetica, sans-serif; */
+    font-family: 'Fredoka One', cursive;
+    font-size: 25px;
     text-align: center;
     padding-top: 30px;
     padding-bottom: 100px;
     background-color:indianred;
     background: url("https://imgur.com/VSM4UoC.jpg");
     background-size: cover;
-    color:white;
+    color:blueviolet;
     text-shadow: 1000px;
 }
 
@@ -25,11 +27,12 @@ body{
     height:30px;
     width:30px;
     text-align: center;
+    color:aqua;
 }
 
-.grid .mine {
+/* .grid .mine {
     background-color: red;
-}
+} */
 
 #reset-button {
     display:flex;
@@ -46,4 +49,5 @@ body{
 
 .gameDecision{
     color: black;
+    font-size: 30px;
 }
