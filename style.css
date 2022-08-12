@@ -2,7 +2,7 @@ body{
     font-family: Helvetica, sans-serif;
     text-align: center;
     padding-top: 30px;
-    padding-bottom: 30px;
+    padding-bottom: 100px;
     background-color:indianred;
     background: url("https://imgur.com/VSM4UoC.jpg");
     background-size: cover;
@@ -17,7 +17,7 @@ body{
     width: 330px;
     display: flex;
     flex-wrap: wrap;
-    background-color: gray;
+    background-color:darkslateblue;
 }
 
 .grid div{
@@ -28,13 +28,22 @@ body{
 }
 
 .grid .mine {
-background-color: red;
+    background-color: red;
 }
-/* 
-.grid .clicked {
-    background-color: rgb(8, 54, 101);
-} */
 
 #reset-button {
     display:flex;
+}
+
+.grid .clicked {
+    background-color:blue; 
+}
+
+.button-wrapper{
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.gameDecision{
+    color: black;
 }

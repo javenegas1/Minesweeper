@@ -1,28 +1,29 @@
-const grid = document.querySelector('.grid')
-const reset = document.querySelector('.reset-button')
 let cells = []
+const reset = document.querySelector('.reset-button')
+const grid = document.querySelector('.grid')
 
 generateGame()
 function generateGame(){
-    let totalMines = (100/10) + 3
+
+    let totalMines = (100/10) + 5
     let gridArr = Array(100).fill('value')
     // include mines in grid
     randomBombs()
     function randomBombs(){
-        for(i=0; i<totalMines; i++){
+        for(i=0; i<=totalMines; i++){
             gridArr[Math.floor(Math.random()*100)] = 'mine'
+        	}
         }
-    }
-    //console.log(gridArr)
-
-    // create grid with array 
+        
     for(let i=0; i<100; i++){
         const cell = document.createElement('div')
         cell.setAttribute('id', i)
         cell.classList.add(gridArr[i])
         grid.appendChild(cell)
         cells.push(cell)
-        cell.addEventListener('click', playGame, {once: true})
+        cell.addEventListener('click', function(e) {
+        	playGame(cell)
+        })
     }
 
     // add values to each cell
@@ -61,146 +62,104 @@ function generateGame(){
     }
 }
 //console.log(cells[1])
-
-//either step on mine or earn points
-//playGame(document.getElementById('1').click())
-function playGame(e){
-    let position = e.target.id
-    //console.log(e.target.id, document.getElementById(`${parseInt(position)}`))
-    if(e.target.classList.contains('mine')){
-        //e.target.style.backgroundColor = 'red'
-        alert('game over')
-        // for(i=99; i>0; i--){
-        //     if(document.getElementById(i).classList.contains('mine')){
-        //         console.log(`mine at: ${i}`)
-        //         //document.getElementById(i).classList.remove('mine')
-        //         playGame(document.getElementById(`${i}`).click())
-        //     }
-        //     else{
-        //         continue;
-        //     }
-        // }
-    } 
-    if(e.target.classList.contains('clicked')){
-        return;
+let clickedCount = 0
+let gameOver = false
+//either step on mine or retrieve value
+function playGame(cell){
+    let position = cell.id
+    if(gameOver) {
+        return
     }
-    //console.log(e.target.getAttribute('data'))
-    //get attribute data pulls out the value assigned to cell according to adjacent mines
-    if(e.target.hasAttribute('data')){
-        e.target.innerHTML = e.target.getAttribute('data')
-        if(e.target.innerHTML != '0'){
-            e.target.classList.add('clicked')
-            return;
-        } 
-        if(e.target.innerHTML == '0') {
-                if(parseInt(position) > 0 && parseInt(position)%10 !== 0){
-                    let newPosition = parseInt(position) - 11
-                    playGame(document.getElementById(newPosition).click())
-                }
-                else if(parseInt(position) > 9){
-                    let newPosition = parseInt(position) - 10
-                    playGame(document.getElementById(newPosition).click())
-                }
-                else if(parseInt(position) > 9 && parseInt(position)%10 !== 9){
-                    let newPosition = parseInt(position) - 9
-                    playGame(document.getElementById(newPosition).click())
-                }
-                else if(parseInt(position) > 0 && parseInt(position)%10 !== 0){
-                    let newPosition = parseInt(position) - 1
-                    playGame(document.getElementById(newPosition).click())
-                }
-                else if(parseInt(position) > 9 && parseInt(position)%10 !== 9){
-                    let newPosition = parseInt(position) +1
-                    playGame(document.getElementById(newPosition).click())
-                }
-                else if(parseInt(position) < 90 && parseInt(position)%10 !== 0){
-                    let newPosition = parseInt(position) + 9
-                    playGame(document.getElementById(newPosition).click())
-                }    
-                else if(parseInt(position) < 90){
-                    let newPosition = parseInt(position) + 10
-                    playGame(document.getElementById(newPosition).click())
-                }    
-                else if(parseInt(position) < 90 && parseInt(position)%10 !== 9){
-                    let newPosition = parseInt(position) + 11
-                    playGame(document.getElementById(newPosition).click())
-                } 
+    if(cell.classList.contains('clicked')){
+    	return
+    }
+    if(cell.classList.contains('mine')){
+        //e.target.style.backgroundColor = 'red'
+        cells.forEach(cell => {
+            if (cell.classList.contains('mine')) {
+                cell.style.backgroundColor = 'red'
+            }
+          })
+          breakGame(cell)
+          gameOver = true
+    } else if (cell.classList.contains('value')){
+        
+        // win logic
+        clickedCount++
+        if(clickedCount === 85){
+            console.log('you win')
+            document.querySelector('.gameDecision').innerHTML = 'You Won!!!'
+
         }
 
-        // if(e.target.innerHTML == '0'){
-        //     console.log(position)
-            // while(e.target.hasAttribute('data')){
-            //     playGame()
-            //     //e is event, event is click, click is initiated when individual cell is clicked
-            //     //when cell is clicked, if cell is 0, cells around it should also be 'clicked'
-            //     //cell has id number attached to it, access id (set id equal to variable that can 
-            //     // be modified to bring back another id)
-            //     //trigger new click event based on number
-            //     //   .id = `${position + 1}`???
-            // }
-        // }
-
-        // if(e.target.innerHTML == '0'){
-        //clickedZero(e, position)
-        // }
+        cell.innerHTML = cell.getAttribute('data')
+        if(cell.innerHTML != '0'){
+            cell.classList.add('clicked')
+            return
+        } 
+        clickedZero(cell, position)
     }
-    // clickedZero(e, position)
-    e.target.classList.add('clicked')
+    cell.classList.add('clicked')
 }
 
 //reveal mines
-
-// function revealMines(e){
-//     for(i=99; i>0; i--){
-//         if(document.getElementById(i).classList.contains('mine')){
-//             console.log(`mine at: ${i}`)
-//             document.getElementById(i).classList.remove('mine')
-//             revealMines(document.getElementById(`${i}`).click())
-//         }
-//         else{
-//             break;
-//         }
-//     }
-// }
-
-
-
 
 // console.log(cells[9].id)
 
 // surrounding squares where value is zero or another value
 
-// function clickedZero(e, position){
-//     // setTimeout(() => {
-//     //     if(parseInt(position) > 0 && parseInt(position)%10 !== 0){
-//     //         let newPosition = parseInt(position) - 11
-//     //         let newCell = document.getElementById(newPosition)
-//     //         playGame(document.getElementById('1'))
-//     //     }
-//     //     if(parseInt(position) > 9){
-//     //         let newPosition = parseInt(position) - 10
-//     //         let newCell = document.getElementById('1')
-//     //         playGame(newCell)
-//     //     }
-//     // }, 300);
-// }
+function clickedZero(cell, position){
+    //timeout to allow first function to process before returning values
+    setTimeout(() => {
+        // same logic as mine checking 9-11 or +-1 on index values
+        if(parseInt(position) > 9 && parseInt(position)%10 !== 0){
+            let newPosition = parseInt(position) - 11
+            playGame(document.getElementById(newPosition))
+        }
+        if(parseInt(position) > 9){
+            let newPosition = parseInt(position) - 10
+            playGame(document.getElementById(newPosition))
+        }
+        if(parseInt(position) > 9 && parseInt(position)%10 !== 9){
+            let newPosition = parseInt(position) - 9
+            playGame(document.getElementById(newPosition))
+        }
+        if(parseInt(position) > 0 && parseInt(position)%10 !== 0){
+            let newPosition = parseInt(position) - 1
+            playGame(document.getElementById(newPosition))
+        }
+        if(parseInt(position) < 99 && parseInt(position)%10 !== 9){
+            let newPosition = parseInt(position) +1
+            playGame(document.getElementById(newPosition))
+        }
+        if(parseInt(position) < 90 && parseInt(position)%10 !== 0){
+            let newPosition = parseInt(position) + 9
+            playGame(document.getElementById(newPosition))
+        }    
+        if(parseInt(position) < 90){
+            let newPosition = parseInt(position) + 10
+            playGame(document.getElementById(newPosition))
+        }    
+        if(parseInt(position) < 90 && parseInt(position)%10 !== 9){
+            let newPosition = parseInt(position) + 11
+            playGame(document.getElementById(newPosition))
+        } 
+    }, 300)
+}
+
+//game over
+function breakGame(cell){
+    alert('You Lost!!!')
+    document.querySelector('.gameDecision').innerHTML = 'Loser! Try your hand at another game LOL!'
+}
+
+function playerWins(cell){
+    let clickedArr = []
+    
+}
 
 // reset button
 reset.addEventListener('click', resetButton)
 function resetButton (e) {
     location.reload()
-}
-
-// win condition
-
-function winGame(e){
-    for(i=0; i<cells.length; i++){
-        let count = 0
-        if(document.getAttribute('clicked') == true){
-            count++
-        }
-    }
-    if(count=87){
-    alert('you win')
-    }
 }
