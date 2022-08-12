@@ -15,3 +15,5 @@ I tried a few times to beat my own game, but I was still no good...
 Challenges and themes I ran into while creating my version of Minesweeper include making consistent 'win' logic to facilitate when a player actually wins. This as well as controlling a core aspect of the game, the number of mines. 
 
 Overall, this project showcases a strong base of DOM Manipulation and function recursion that is sure to make me confused if I ever tried to build it again. Let me know what you think!
+
+https://javenegas1.github.io/Minesweeper/
