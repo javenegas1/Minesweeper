@@ -12,6 +12,10 @@ Definitely enjoyed recreating this classic! The base of the game requires a conn
 
 I tried a few times to beat my own game, but I was still no good...
 
+<img width="1440" alt="Screen Shot 2022-08-12 at 10 34 17 AM" src="https://user-images.githubusercontent.com/104710154/184377597-c72691e2-7028-4c67-b1f9-c9aa4e36df00.png">
+
+This project taught me much about how the base of your code is fundamental to everything else working. I struggled much with designing the first part of this code to get everything working in harmony.
+
 Challenges and themes I ran into while creating my version of Minesweeper include making consistent 'win' logic to facilitate when a player actually wins. This as well as controlling a core aspect of the game, the number of mines. 
 
 Overall, this project showcases a strong base of DOM Manipulation and function recursion that is sure to make me confused if I ever tried to build it again. Let me know what you think!
