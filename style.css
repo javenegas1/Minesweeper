@@ -30,9 +30,9 @@ body{
     color:aqua;
 }
 
-.grid .mine {
+/* .grid .mine {
     background-color: red;
-}
+} */
 
 #reset-button {
     display:flex;
